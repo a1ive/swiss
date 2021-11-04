@@ -314,7 +314,6 @@ endif
 OBJDIRS := \
     $(TERMLIB) \
     $(RTL_BASE) \
-    $(RTL_BASE)/$(ARCH) \
     $(RTLC) \
     $(WINCSUP) \
     $(SWISS) \

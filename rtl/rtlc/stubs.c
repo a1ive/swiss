@@ -34,6 +34,7 @@ Environment:
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //
 // ---------------------------------------------------------------- Definitions
@@ -223,6 +224,27 @@ RtlAtomicExchange32 (
     volatile ULONG ret = *Address;
     *Address = ExchangeValue;
     return ret;
+}
+
+RTL_API
+PVOID
+RtlCopyMemory (
+    PVOID Destination,
+    PCVOID Source,
+    UINTN ByteCount
+    )
+{
+    return memcpy (Destination, Source, ByteCount);
+}
+
+RTL_API
+VOID
+RtlZeroMemory (
+    PVOID Buffer,
+    UINTN ByteCount
+    )
+{
+    memset (Buffer, 0, ByteCount);
 }
 
 //

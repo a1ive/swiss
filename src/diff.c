@@ -3201,7 +3201,7 @@ Return Value:
             assert((SizeA != 0) && (SizeB == 0));
 
             if (SizeA == 1) {
-                printf("%lldd%lld\n", (LONGLONG)LineA + 1, LineB);
+                printf("%lldd%lld\n", (LONGLONG)LineA + 1, (LONGLONG)LineB);
 
             } else {
                 printf("%lld,%lldd%lld\n", (LONGLONG)LineA + 1,
