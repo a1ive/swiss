@@ -17,7 +17,6 @@ jobs:
 
     - uses: msys2/setup-msys2@v2
       with:
-        msystem: MSYS
         update: true
         install: >-
           make
@@ -25,19 +24,27 @@ jobs:
           mingw-w64-i686-toolchain
     - name: Build64
       working-directory: ${{env.GITHUB_WORKSPACE}}
+      env: 
+        MSYSTEM: MINGW32
       run: |
-        export PATH=/mingw64/bin:$PATH
         mkdir -p release/x64
         make ARCH=x64
         cp out/swiss.exe release/x64
+        make clean
 
     - name: Build32
       working-directory: ${{env.GITHUB_WORKSPACE}}
+      env: 
+        MSYSTEM: MINGW32
       run: |
-        export PATH=/mingw32/bin:$PATH
         mkdir -p release/x86
         make ARCH=x86
         cp out/swiss.exe release/x86
+        make clean
+    
+    - name: Extras
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: |
         cp README.md release/README.md
         cp LICENSE release/LICENSE
 
