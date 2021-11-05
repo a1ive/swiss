@@ -1,4 +1,4 @@
-# Swiss -- Unix-in-a-box on Windows and Minoca OS
+# Swiss -- Unix-in-a-box on Windows
 
 Swiss is a Unix multitool that runs on Windows. It is a single binary that contains many of the basic core POSIX utilities, including a Bourne shell (sh), cp, mv, sed, and many more.
 
@@ -68,9 +68,6 @@ swiss.exe sh -c 'for app in `swiss.exe --list`; do cp -pv swiss.exe $app.exe ; d
 * wc
 * xargs
 
-### Motivation
-When we were building Minoca OS we needed a basic set of core POSIX utilities. Minoca is designed for lightweight embedded systems, and there's a fair amount of code reuse within the core utilities, so it made sense to us to package the core utilities together in one binary. We liked the other Unix-in-a-box solutions we'd come across, but were dismayed to see that they weren't super portable, and were also a bit much for what we needed. We created Swiss to fill that gap on Minoca OS. Windows support emerged somewhat organically during internal development.
-
 ### Notes About Paths on Windows
 A couple of notes about how paths work in sh on Windows:
    * The separator character of the PATH environment variable in sh is a semicolon `;`, not the traditional Unix colon. This is because Windows uses colon characters as part of paths, a la `C:\Windows`. This may throw off some scripts, but many scripts that manipulate the path offer something like a PATH_SEPARATOR variable. See below for specific directions on "configure" style scripts.
@@ -103,12 +100,7 @@ Important Makefile variables:
 * `CPPFLAGS` - Command line options passed to the C preprocessor.
 * `CFLAGS` - Command line options passed to the C compiler.
 * `LDFLAGS` - Command line options passed to the linker (CC).
-* `OS` - Target build OS.
 * `ARCH` - Build architecture. Automatically detected, can be forced (in conjunction with CC) for cross-compilation.
 
 ### License
 Swiss is licensed under GPLv3. Alternate licensing arrangements are available, contact us (below) for details. See the LICENSE file for complete information.
-
-### Contact
-
-Send questions or comments to info AT minocacorp DOT com.
