@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
 
     steps:
     - uses: actions/checkout@v2
@@ -22,16 +25,16 @@ jobs:
           mingw-w64-i686-toolchain
     - name: Build64
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      shell: msys2 MINGW64
       run: |
+        export PATH=/mingw64/bin:$PATH
         mkdir -p release/x64
         make ARCH=x64
         cp out/swiss.exe release/x64
 
     - name: Build32
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      shell: msys2 MINGW32
       run: |
+        export PATH=/mingw32/bin:$PATH
         mkdir -p release/x86
         make ARCH=x86
         cp out/swiss.exe release/x86
