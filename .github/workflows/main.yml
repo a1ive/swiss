@@ -17,28 +17,23 @@ jobs:
 
     - uses: msys2/setup-msys2@v2
       with:
-        msystem: mingw64
+        msystem: msys
         update: true
         install: >-
           base-devel
-          git
           mingw-w64-x86_64-toolchain
+          mingw-w64-i686-toolchain
     - name: Build64
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
+        set MSYSTEM=MINGW64
         mkdir -p release/x64
         make ARCH=x64
         cp out/swiss.exe release/x64
-
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: mingw32
-        update: true
-        install: >-
-          mingw-w64-i686-toolchain
     - name: Build32
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
+        set MSYSTEM=MINGW32
         mkdir -p release/x86
         make ARCH=x86
         cp out/swiss.exe release/x86
