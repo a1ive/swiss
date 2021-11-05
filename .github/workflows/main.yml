@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "master"
+
+defaults:
+  run:
+    shell: msys2 {0}
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: mingw64
+
+    - uses: actions/checkout@v2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: |
+        mkdir -p release/x64
+        make
+        cp out/swiss.exe release/x64
+        cp README.md release/README.md
+        cp LICENSE release/LICENSE
+
+    - uses: thedoctor0/zip-release@master
+      with:
+        type: 'zip'
+        filename: 'swiss.zip'
+        directory: 'release'
+        path: '.'
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        automatic_release_tag: "latest"
+        title: "Development Build"
+        files: |
+          swiss.zip
