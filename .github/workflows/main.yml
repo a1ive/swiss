@@ -25,7 +25,7 @@ jobs:
     - name: Build64
       working-directory: ${{env.GITHUB_WORKSPACE}}
       env: 
-        MSYSTEM: MINGW32
+        MSYSTEM: MINGW64
       run: |
         mkdir -p release/x64
         make ARCH=x64
@@ -62,4 +62,4 @@ jobs:
         automatic_release_tag: "latest"
         title: "Development Build"
         files: |
-          swiss.zip
+          release/swiss.zip
