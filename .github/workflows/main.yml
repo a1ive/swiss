@@ -5,10 +5,6 @@ on:
     branches:
       - "master"
 
-defaults:
-  run:
-    shell: msys2 {0}
-
 jobs:
   build:
     runs-on: windows-latest
@@ -20,25 +16,22 @@ jobs:
         msystem: msys
         update: true
         install: >-
-          base-devel
+          make
           mingw-w64-x86_64-toolchain
           mingw-w64-i686-toolchain
     - name: Build64
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
         set MSYSTEM=MINGW64
-        mkdir -p release/x64
-        make ARCH=x64
-        cp out/swiss.exe release/x64
-    - name: Build32
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: |
+        msys2 -c "mkdir -p release/x64"
+        msys2 -c "make ARCH=x64"
+        msys2 -c "cp out/swiss.exe release/x64"
         set MSYSTEM=MINGW32
-        mkdir -p release/x86
-        make ARCH=x86
-        cp out/swiss.exe release/x86
-        cp README.md release/README.md
-        cp LICENSE release/LICENSE
+        msys2 -c "mkdir -p release/x86"
+        msys2 -c "make ARCH=x86"
+        msys2 -c "cp out/swiss.exe release/x86"
+        msys2 -c "cp README.md release/README.md"
+        msys2 -c "cp LICENSE release/LICENSE"
 
     - uses: thedoctor0/zip-release@master
       with:
